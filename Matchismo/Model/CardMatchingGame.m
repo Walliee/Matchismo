@@ -81,7 +81,7 @@ static const int COST_TO_CHOOSE = 1;
                 card.chosen = YES;
             }
         }
-    } else if (self.is3CardMode){
+    } else {
         if (!card.isMatched) {
             if (card.isChosen) {
                 card.chosen = NO;

@@ -16,15 +16,18 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) IBOutlet UIButton *redealButton;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *gameModeButton;
+@property (weak, nonatomic) IBOutlet UILabel *gameMoveLabel;
 @end
 
 @implementation CardGameViewController
 
-- (IBAction)touchGameModeButton:(UISegmentedControl *)sender {
+- (IBAction)touchGameModeButton:(UISegmentedControl *)sender
+{
     [self setMode];
 }
 
-- (IBAction)touchRedealButton:(UIButton *)sender {
+- (IBAction)touchRedealButton:(UIButton *)sender
+{
     _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
                                               usingDeck:[self createDeck]];
     [self updateUI];
@@ -84,6 +87,11 @@
     } else {
         [self.game setMode:YES];
     }
+}
+
+- (void)updateGameMoveLabel
+{
+    
 }
 
 @end
