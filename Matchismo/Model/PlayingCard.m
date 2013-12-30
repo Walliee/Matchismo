@@ -16,9 +16,21 @@
     if ([otherCards count] == 1) {
         PlayingCard *otherCard = [otherCards firstObject];
         if (otherCard.rank == self.rank) {
-            score = 4;
+            score = 8;
         } else if ([otherCard.suit isEqual:self.suit]) {
+            score = 2;
+        }
+    } else if ([otherCards count] == 2) {
+        PlayingCard *otherCardOne = [otherCards firstObject];
+        PlayingCard *otherCardTwo = [otherCards lastObject];
+        if (otherCardOne.rank == self.rank || otherCardOne.rank == otherCardTwo.rank || otherCardTwo.rank == self.rank) {
+            score = 4;
+        } else if (otherCardOne.rank == self.rank && self.rank == otherCardTwo.rank) {
+            score = 16;
+        } else if ([otherCardOne.suit isEqual:self.suit] || [otherCardOne.suit isEqual:otherCardTwo.suit] || [otherCardTwo.suit isEqual:self.suit]) {
             score = 1;
+        } else if ([otherCardOne.suit isEqual:self.suit] && [self.suit isEqual:otherCardTwo.suit]){
+            score = 4;  
         }
     }
     return score;

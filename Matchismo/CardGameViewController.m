@@ -14,9 +14,24 @@
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (strong, nonatomic) IBOutlet UIButton *redealButton;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *gameModeButton;
 @end
 
 @implementation CardGameViewController
+
+- (IBAction)touchGameModeButton:(UISegmentedControl *)sender {
+    [self setMode];
+}
+
+- (IBAction)touchRedealButton:(UIButton *)sender {
+    _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
+                                              usingDeck:[self createDeck]];
+    [self updateUI];
+    self.gameModeButton.enabled = YES;
+    [self setMode];
+    
+}
 
 - (CardMatchingGame *)game
 {
@@ -35,7 +50,6 @@
     int chosenButtonIndex = (int) [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chosenButtonIndex];
     [self updateUI];
-
 }
 
 - (void)updateUI
@@ -50,6 +64,7 @@
         cardButton.enabled = !card.isMatched;
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", (int) self.game.score];
     }
+    self.gameModeButton.enabled = NO;
 }
 
 - (NSString *)titleForCard:(Card *)card
@@ -60,6 +75,15 @@
 - (UIImage *)backgroundImageForCard:(Card *)card
 {
     return [UIImage imageNamed:card.isChosen ? @"cardfront" : @"cardback"];
+}
+
+- (void)setMode
+{
+    if (self.gameModeButton.selectedSegmentIndex == 0){
+        [self.game setMode:NO];
+    } else {
+        [self.game setMode:YES];
+    }
 }
 
 @end
